@@ -1,0 +1,39 @@
+Database operators are symbols or keywords used in SQL queries to perform operations such as comparison, arithmetic, logical, and string manipulation. Here are some common types of operators in SQL:
+
+1. **Comparison Operators**:
+   - Used to compare values in the WHERE clause of a query.
+   - Examples: = (equal to), <> or != (not equal to), > (greater than), < (less than), >= (greater than or equal to), <= (less than or equal to)
+
+2. **Arithmetic Operators**:
+   - Used to perform mathematical calculations on numeric values.
+   - Examples: + (addition), - (subtraction), * (multiplication), / (division), % (modulus)
+
+3. **Logical Operators**:
+   - Used to combine conditions in the WHERE clause.
+   - Examples: AND (logical AND), OR (logical OR), NOT (logical NOT)
+
+4. **String Concatenation Operator**:
+   - Used to concatenate strings together.
+   - Example: || (double pipes)
+
+5. **Wildcard Operators**:
+   - Used in conjunction with LIKE or NOT LIKE to match patterns in string values.
+   - Examples: % (matches any sequence of characters), _ (matches any single character)
+
+6. **IN Operator**:
+   - Used to specify multiple values in a WHERE clause.
+   - Example: IN (value1, value2, ...)
+
+7. **BETWEEN Operator**:
+   - Used to specify a range of values in a WHERE clause.
+   - Example: BETWEEN value1 AND value2
+
+8. **IS NULL Operator**:
+   - Used to check if a value is NULL.
+   - Example: IS NULL
+
+9. **IS NOT NULL Operator**:
+   - Used to check if a value is not NULL.
+   - Example: IS NOT NULL
+
+These operators are fundamental in constructing SQL queries to retrieve, manipulate, and filter data stored in a database. Understanding how to use them effectively is crucial for working with databases efficiently.

@@ -1,0 +1,14 @@
+NOT NULL Constraint: It makes sure that every row in a table must have a value for a specific column. No empty slots allowed.
+
+UNIQUE Constraint: It guarantees that all values in a column are different. No duplicates are allowed.
+
+PRIMARY KEY Constraint: It's like a VIP ticket for each row in a table. It uniquely identifies each row and ensures no duplicates or empty slots.
+
+FOREIGN KEY Constraint: It's like a bridge between two tables. It ensures that a value in one table matches a value in another table, maintaining the relationship between them.
+
+CHECK Constraint: It's like setting rules for a column. You can define conditions that data in a column must meet, like age being greater than 18.
+
+DEFAULT Constraint: It's a backup plan. If you forget to provide a value when adding a new row, it automatically fills in a default value.
+
+INDEX Constraint: It's like an organized list of values. It speeds up searching in a table by creating a sorted list of values, making data retrieval faster.
+

@@ -1,0 +1,106 @@
+In SQL, a trigger is a database object that is automatically executed or fired in response to certain events or actions performed on a table or view. Triggers are used to enforce business rules, maintain data integrity, and automate tasks within a database. 
+
+Key components and aspects of triggers:
+
+1. **Event**: Triggers are associated with specific events that occur on a table, such as INSERT, UPDATE, or DELETE operations.
+
+2. **Timing**: Triggers can be executed either before or after the associated event occurs. 
+   - **Before Trigger**: Fired before the execution of the triggering event, allowing modification of data before it is inserted, updated, or deleted.
+   - **After Trigger**: Fired after the execution of the triggering event, typically used for auditing, logging, or enforcing constraints.
+
+3. **Execution Context**: Triggers execute within the context of a transaction and have access to the old and new values affected by the triggering event.
+   - **OLD**: Refers to the old values of the row affected by an UPDATE or DELETE operation.
+   - **NEW**: Refers to the new values of the row affected by an INSERT or UPDATE operation.
+
+4. **Statement-Level vs. Row-Level**: Triggers can be defined to fire once for each SQL statement (statement-level trigger) or for each affected row (row-level trigger).
+
+5. **Actions**: Triggers can execute SQL statements, call stored procedures, raise errors, or perform other database operations based on the triggering event.
+
+6. **Control Flow**: Triggers can contain conditional logic and control flow constructs to determine the actions to be taken based on specific conditions.
+
+7. **Database Events**: In addition to table-level triggers, some database systems also support triggers for database-level events, such as database startup or shutdown.
+
+Overall, triggers provide a powerful mechanism for enforcing business rules, maintaining data integrity, and automating repetitive tasks within a database system. However, they should be used judiciously to avoid unintended side effects and performance overhead.
+
+
+
+
+
+
+CREATE DATABASE MY_TRIGGERS;
+USE MY_TRIGGERS;
+
+CREATE TABLE student (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50),
+    age INT,
+    mobile VARCHAR(20),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+INSERT INTO student (name, age, mobile) 
+VALUES 
+('John Doe', 25, '1234567890'),
+('Jane Smith', 30, '9876543210'),
+('Alice Johnson', 22, '4567891230');
+
+INSERT INTO student (name, age, mobile) 
+VALUES 
+('John sena', 25, '1234567890');
+
+select * from student;
+
+
+CREATE TABLE studata_before_update (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    student_id INT,
+    name VARCHAR(50),
+    age INT,
+    mobile VARCHAR(20),
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+drop trigger before_student_update_trigger;
+DELIMITER //
+CREATE TRIGGER before_student_update_trigger
+BEFORE UPDATE ON student
+FOR EACH ROW
+BEGIN
+    INSERT INTO studata_before_update (student_id, name, age, mobile, updated_at)
+    VALUES (OLD.id, OLD.name, OLD.age, OLD.mobile, CURRENT_TIMESTAMP);
+END;
+//
+DELIMITER ;
+
+
+
+
+
+CREATE TABLE studata_after_update (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    student_id INT,
+    name VARCHAR(50),
+    age INT,
+    mobile VARCHAR(20),
+    captured_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+
+DELIMITER //
+CREATE TRIGGER after_student_update_trigger
+AFTER UPDATE ON student
+FOR EACH ROW
+BEGIN
+    INSERT INTO studata_after_update (student_id, name, age, mobile, captured_at)
+    VALUES (NEW.id, NEW.name, NEW.age, NEW.mobile, CURRENT_TIMESTAMP);
+END;
+//
+DELIMITER ;
+
+
+SELECT * FROM studata_after_update;
+SELECT * FROM studata_before_update;
+
+UPDATE STUDENT SET AGE=49 WHERE NAME="JOHN SENA";

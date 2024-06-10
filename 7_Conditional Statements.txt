@@ -1,0 +1,32 @@
+IF FUNCTION -----------------------------------------
+
+SELECT 
+    order_id, 
+    order_amount,
+    IF(order_amount > 1000, 'High', 'Low') AS order_category
+FROM 
+    orders;
+
+NESTED IF ------------------------------------------------
+
+SELECT 
+    order_id, 
+    order_amount,
+    IF(order_amount > 1000, 'High', 
+        IF(order_amount > 500, 'Medium', 'Low')
+    ) AS order_category
+FROM 
+    orders;
+
+CASE ------------------------------------------------------
+
+SELECT 
+    order_id, 
+    order_amount,
+    CASE
+        WHEN order_amount > 1000 THEN 'High'
+        WHEN order_amount > 500 THEN 'Medium'
+        ELSE 'Low'
+    END AS order_category
+FROM 
+    orders;
