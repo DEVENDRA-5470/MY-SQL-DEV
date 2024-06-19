@@ -20,87 +20,65 @@ Key components and aspects of triggers:
 
 7. **Database Events**: In addition to table-level triggers, some database systems also support triggers for database-level events, such as database startup or shutdown.
 
-Overall, triggers provide a powerful mechanism for enforcing business rules, maintaining data integrity, and automating repetitive tasks within a database system. However, they should be used judiciously to avoid unintended side effects and performance overhead.
+USE SBIBANK;
+CREATE TABLE MAIN_TABLE (
+    STU_ID INT AUTO_INCREMENT PRIMARY KEY,
+    STU_NAME VARCHAR(255),
+    STU_COURSE VARCHAR(255),
+    STU_FEES DECIMAL(10, 2),
+    STU_CREATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    STU_UPDATED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
 
-
-
-
-
-
-CREATE DATABASE MY_TRIGGERS;
-USE MY_TRIGGERS;
-
-CREATE TABLE student (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(50),
-    age INT,
-    mobile VARCHAR(20),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE BACKUP_TABLE (
+    STU_ID INT,
+    STU_NAME VARCHAR(255),
+    STU_COURSE VARCHAR(255),
+    STU_FEES DECIMAL(10, 2),
+    STU_CREATED_AT TIMESTAMP,
+    STU_UPDATED_AT TIMESTAMP,
+    STU_DELETED_AT TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 
-INSERT INTO student (name, age, mobile) 
-VALUES 
-('John Doe', 25, '1234567890'),
-('Jane Smith', 30, '9876543210'),
-('Alice Johnson', 22, '4567891230');
+-- ---------------------------------- CREATE TRIGGER BEFORE_MAIN_TABLE_DELETE -----------------------------------------------
 
-INSERT INTO student (name, age, mobile) 
-VALUES 
-('John sena', 25, '1234567890');
-
-select * from student;
-
-
-CREATE TABLE studata_before_update (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    student_id INT,
-    name VARCHAR(50),
-    age INT,
-    mobile VARCHAR(20),
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-drop trigger before_student_update_trigger;
 DELIMITER //
-CREATE TRIGGER before_student_update_trigger
-BEFORE UPDATE ON student
+
+CREATE TRIGGER BEFORE_MAIN_TABLE_DELETE
+BEFORE DELETE ON MAIN_TABLE
 FOR EACH ROW
 BEGIN
-    INSERT INTO studata_before_update (student_id, name, age, mobile, updated_at)
-    VALUES (OLD.id, OLD.name, OLD.age, OLD.mobile, CURRENT_TIMESTAMP);
+    INSERT INTO BACKUP_TABLE (STU_ID, STU_NAME, STU_COURSE, STU_FEES, STU_CREATED_AT, STU_UPDATED_AT)
+    VALUES (OLD.STU_ID, OLD.STU_NAME, OLD.STU_COURSE, OLD.STU_FEES, OLD.STU_CREATED_AT, OLD.STU_UPDATED_AT);
 END;
 //
 DELIMITER ;
+-- -------------------------------------------------------------------------------------------
+
+
+-- Insert data into main table
+INSERT INTO MAIN_TABLE (STU_NAME, STU_COURSE, STU_FEES) VALUES 
+('Bob', 'Mathematics', 15000.00);
+INSERT INTO MAIN_TABLE (STU_NAME, STU_COURSE, STU_FEES) VALUES 
+('Alice', 'Computer Science', 10000.00);
+INSERT INTO MAIN_TABLE (STU_NAME, STU_COURSE, STU_FEES) VALUES 
+('DEV', 'Mathematics', 15000.00);
+
+SELECT * FROM MAIN_TABLE;
+UPDATE MAIN_TABLE SET STU_FEES=23000 WHERE STU_NAME="DEV";
+-- Delete a row from main table
+DELETE FROM MAIN_TABLE ;
+DELETE FROM BACKUP_TABLE ;
+
+-- Check the backup table to see if the deleted row is there
+SELECT * FROM BACKUP_TABLE;
 
 
 
 
 
-CREATE TABLE studata_after_update (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    student_id INT,
-    name VARCHAR(50),
-    age INT,
-    mobile VARCHAR(20),
-    captured_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
 
 
 
-DELIMITER //
-CREATE TRIGGER after_student_update_trigger
-AFTER UPDATE ON student
-FOR EACH ROW
-BEGIN
-    INSERT INTO studata_after_update (student_id, name, age, mobile, captured_at)
-    VALUES (NEW.id, NEW.name, NEW.age, NEW.mobile, CURRENT_TIMESTAMP);
-END;
-//
-DELIMITER ;
 
-
-SELECT * FROM studata_after_update;
-SELECT * FROM studata_before_update;
-
-UPDATE STUDENT SET AGE=49 WHERE NAME="JOHN SENA";

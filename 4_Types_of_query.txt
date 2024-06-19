@@ -1,0 +1,66 @@
+Here is a brief overview of each of these SQL sublanguages:
+
+### DDL - Data Definition Language
+**Purpose**: Defines the structure of a database, including its tables, fields, and constraints.
+
+**Common Commands**:
+- **CREATE**: Creates a new table, view, or other database object.
+  ```sql
+  CREATE TABLE Employees (
+      EmployeeID int,
+      FirstName varchar(255),
+      LastName varchar(255),
+      BirthDate date
+  );
+  ```
+- **ALTER**: Modifies an existing database object, such as adding or removing a column.
+  ```sql
+  ALTER TABLE Employees ADD COLUMN Email varchar(255);
+  ```
+- **DROP**: Deletes a table, view, or other database object.
+  ```sql
+  DROP TABLE Employees;
+  ```
+- **TRUNCATE**: Removes all records from a table, but keeps the table structure.
+  ```sql
+  TRUNCATE TABLE Employees;
+  ```
+
+### DML - Data Manipulation Language
+**Purpose**: Manipulates data stored in the database.
+
+**Common Commands**:
+- **INSERT**: Adds new records to a table.
+
+- **UPDATE**: Modifies existing records in a table.
+ 
+- **DELETE**: Removes records from a table.
+ 
+
+### DQL - Data Query Language
+**Purpose**: Retrieves data from the database.
+
+**Common Command**:
+- **SELECT**: Queries and returns data from a database.
+ 
+
+### DCL - Data Control Language
+**Purpose**: Manages access to the data in the database.
+
+**Common Commands**:
+- **GRANT**: Gives a user access privileges to the database.
+- **REVOKE**: Removes access privileges from a user.
+
+### TCL - Transaction Control Language
+**Purpose**: Manages transactions within the database.
+
+**Common Commands**:
+- **BEGIN (or START) TRANSACTION**: Begins a transaction.
+ 
+- **COMMIT**: Saves all changes made in the current transaction.
+ 
+- **ROLLBACK**: Undoes all changes made in the current transaction.
+
+- **SAVEPOINT**: Sets a savepoint within a transaction.
+  
+- **RELEASE SAVEPOINT**: Removes a savepoint, making it no longer available for rollback.

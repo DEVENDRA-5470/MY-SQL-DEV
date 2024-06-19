@@ -1,0 +1,43 @@
+A "clause" refers to a distinct part of a SQL statement that serves a specific purpose. There are several clauses used in SQL queries to perform special operations.
+
+1. **SELECT Clause**:
+   - Used to specify the columns to be retrieved from a table.
+   - Syntax: `SELECT column1, column2 FROM table_name`
+
+2. **FROM Clause**:
+   - Specifies the table or tables from which to retrieve the data.
+   - Syntax: `SELECT column1 FROM table_name`
+
+3. **WHERE Clause**:
+   - Used to filter rows based on a specified condition.
+   - Syntax: `SELECT column1 FROM table_name WHERE condition`
+
+4. **GROUP BY Clause**:
+   - Groups rows that have the same values into summary rows.
+   - Syntax: `SELECT column1, COUNT(*) FROM table_name GROUP BY column1`
+
+5. **HAVING Clause**:
+   - Used in combination with the GROUP BY clause to specify a condition for grouping rows.
+   - Syntax: `SELECT column1, COUNT(*) FROM table_name GROUP BY column1 HAVING condition`
+
+6. **ORDER BY Clause**:
+   - Sorts the result set based on one or more columns.
+   - Syntax: `SELECT column1 FROM table_name ORDER BY column1 ASC/DESC`
+
+7. **LIMIT Clause**:
+   - Limits the number of rows returned by a query.
+   - Syntax: `SELECT column1 FROM table_name LIMIT n`
+
+8. **OFFSET Clause**:
+   - Specifies the number of rows to skip before starting to return rows.
+   - Syntax: `SELECT column1 FROM table_name OFFSET n`
+
+9. **JOIN Clause**:
+   - Used to combine rows from two or more tables based on a related column between them.
+   - Syntax: `SELECT column1 FROM table1 JOIN table2 ON table1.column = table2.column`
+
+10. **UNION Clause**:
+    - Combines the results of two or more SELECT statements into a single result set.
+    - Syntax: `SELECT column1 FROM table1 UNION SELECT column1 FROM table2`
+
+These clauses are essential components of SQL queries and are used to retrieve, manipulate, and manage data stored in a database. Understanding how to use them effectively is crucial for writing efficient and powerful SQL queries.

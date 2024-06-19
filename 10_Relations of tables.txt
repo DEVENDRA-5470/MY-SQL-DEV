@@ -1,0 +1,64 @@
+1. One-to-One Relationship:
+One-to-One: Rarely implemented directly in MySQL due to its implications on schema design.
+Usually handled within a single table.
+
+2. One-to-Many Relationship:
+This is a common relationship where one record in one table can be related to multiple records in another table.
+
+CREATE TABLE department (
+    dept_id INT PRIMARY KEY,
+    dept_name VARCHAR(100)
+);
+
+CREATE TABLE employee (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(100),
+    emp_dept_id INT,
+    FOREIGN KEY (emp_dept_id) REFERENCES department(dept_id)
+);
+
+3. Many-to-One Relationship:
+This is essentially the reverse of the One-to-Many relationship, where many records in one table can reference a single record in another table.
+
+CREATE TABLE employee (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(100),
+    emp_dept_id INT,
+    FOREIGN KEY (emp_dept_id) REFERENCES department(dept_id)
+);
+
+CREATE TABLE department (
+    dept_id INT PRIMARY KEY,
+    dept_name VARCHAR(100)
+);
+
+
+4. Many-to-Many Relationship:
+This relationship requires a junction table (or bridge table) to link two tables with a many-to-many relationship.
+
+CREATE TABLE student (
+    student_id INT PRIMARY KEY,
+    student_name VARCHAR(100)
+);
+
+CREATE TABLE course (
+    course_id INT PRIMARY KEY,
+    course_name VARCHAR(100)
+);
+
+CREATE TABLE enrollment (
+    student_id INT,
+    course_id INT,
+    PRIMARY KEY (student_id, course_id),
+    FOREIGN KEY (student_id) REFERENCES student(student_id),
+    FOREIGN KEY (course_id) REFERENCES course(course_id)
+);
+
+
+
+Creating Tables with Relationships:
+When creating tables with relationships in MySQL, ensure:
+
+Primary keys are unique identifiers for each record.
+Foreign keys reference primary keys in other tables to maintain referential integrity.
+
